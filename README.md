@@ -4,6 +4,13 @@ Stripe-style payment links on the [Kite](https://gokite.ai) blockchain. Sister p
 
 Create a payment link with a title + amount + recipient. Share the URL. Anyone with a Kite-compatible wallet pays in USDC.e (mainnet), Test USDT (testnet), or native KITE.
 
+## Live deployment
+
+- Web app: <https://kitepay-weld.vercel.app>
+- Host: Vercel (`kitepay`)
+- Build: `pnpm build`
+- Output: `dist`
+
 ## v0.1 scope
 
 - **Stateless** — link data is encoded into the URL itself (`/p/{base64}`). No backend, no database.
