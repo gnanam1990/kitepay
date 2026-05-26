@@ -23,8 +23,7 @@ import { LinkShareCard } from "./components/link-share-card";
 
 const NETWORK_STORAGE_KEY = "kitepay:network";
 const WALLETCONNECT_PROJECT_ID =
-  // Placeholder — see README. Replace before deploying to mainnet.
-  "00000000000000000000000000000000";
+  import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || "YOUR_PROJECT_ID";
 
 const wagmiConfig = getDefaultConfig({
   appName: "KitePay",
