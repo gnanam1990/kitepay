@@ -37,6 +37,18 @@ export function decodeLink(encoded: string): PaymentLinkData | null {
     if (!parsed.to || !parsed.amount_raw || !parsed.title) return null;
     if (!isValidAddress(parsed.to)) return null;
     if (parsed.token && parsed.token !== "" && !isValidAddress(parsed.token)) return null;
+    // amount_raw is produced via parseUnits(...).toString() — a non-negative
+    // integer string. Reject anything else so a crafted link can't crash the
+    // pay view (BigInt() throws on "5.5"/"abc"/"1e6") or pass a negative amount.
+    if (!/^\d+$/.test(parsed.amount_raw) || BigInt(parsed.amount_raw) <= 0n) return null;
+    // decimals must be a sane non-negative integer for formatUnits/parseUnits.
+    if (
+      typeof parsed.decimals !== "number" ||
+      !Number.isInteger(parsed.decimals) ||
+      parsed.decimals < 0 ||
+      parsed.decimals > 36
+    )
+      return null;
     return parsed;
   } catch {
     return null;
